@@ -4,20 +4,23 @@
       <h1>食谱推荐系统</h1>
     </div>
     <div>
-      <img src="../assets/logo.png"/>
+      <img style="width: 100px;height: 100px;" src="../assets/logo.png" />
     </div>
-    <el-form class="form" :model="form" label-width="auto" style="width: 600px">
-      <el-form-item label="用户名">
-        <el-input v-model="form.username" />
-      </el-form-item>
-      <el-form-item label="密码">
-        <el-input v-model="form.password" type="password"/>
-      </el-form-item>
-    </el-form>
-    <div>
-      <el-button @click="login" class="button">登录</el-button>
-      <el-button @click="goSign" class="button">注册</el-button>
-    </div>
+    <el-card class="form">
+      <el-form style="width: 100%; height: 100%;" :model="form" label-width="auto">
+        <el-form-item label="用户名">
+          <el-input v-model="form.username" />
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input v-model="form.password" type="password" />
+        </el-form-item>
+      </el-form>
+      <div style="width: 100%; display: flex; align-items: center;justify-content: center;">
+        <el-button type="primary" @click="login" class="button">登录</el-button>
+        <el-button @click="goSign" class="button">注册</el-button>
+      </div>
+    </el-card>
+
 
 
   </div>
@@ -76,6 +79,7 @@ function goSign() {
 }
 
 .form {
+  width: 400px;
   margin: 40px auto;
 }
 </style>

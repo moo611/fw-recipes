@@ -8,7 +8,7 @@ import Recipes from "../views/recipes/index.vue";
 import Detail from "../views/recipes/detail.vue";
 import Cuisines from '../views/cuisines/index.vue';
 import { getToken } from "../utils/auth"; // 访问缓存的用户名
-
+import Recommend from '../views/recommend/index.vue'
 const routes = [
   {
     path: "/login",
@@ -44,6 +44,12 @@ const routes = [
         path: "user",
         name: "User",
         component: User,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "recommend",
+        name: "Recommend",
+        component: Recommend,
         meta: { requiresAuth: true },
       },
     ],

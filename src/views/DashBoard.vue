@@ -75,7 +75,7 @@ const getInfo = () => {
     } else {
 
       menus.push({ label: '菜谱分享', value: '/dashboard/recipes' })
-
+      menus.push({label: '菜谱推荐', value: '/dashboard/recommend'})
     }
     menuList.value = menus
 

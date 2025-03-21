@@ -1,10 +1,11 @@
 <template>
   <div>
     <div class="header">
-      <el-select @change="getRecipesList" style="width: 200px; margin-right: 20px;" v-model="queryParams.status" placeholder="状态">
+      <el-select v-show="getUser().role == '0'" @change="getRecipesList" style="width: 200px; margin-right: 20px;"
+        v-model="queryParams.status" placeholder="状态">
         <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
-     
+
       <el-button @click="handleAdd" type="primary" class="btn-add">分享</el-button>
     </div>
     <el-table class="my-table" :data="state.data.list">
@@ -21,19 +22,31 @@
       <el-table-column prop="createTime" label="创建时间" />
 
 
-      <el-table-column label="操作" v-if="queryParams.status == '0'">
+      <el-table-column label="操作">
         <template #default="scope">
-          <el-button type="primary" @click="handleStatus(scope.row, '1')">
-            通过
-          </el-button>
-          <el-button type="danger" @click="handleStatus(scope.row, '2')">
-            驳回
-          </el-button>
-          <el-button type="warning" @click="handleDel(scope.$index, scope.row)">
-            删除
-          </el-button>
+          <div v-if="getUser().role == '0'">
+            <el-button type="primary" @click="handleStatus(scope.row, '1')" :disabled="queryParams.status !== '0'">
+              通过
+            </el-button>
+            <el-button type="danger" @click="handleStatus(scope.row, '2')" :disabled="queryParams.status !== '0'">
+              驳回
+            </el-button>
+            <el-button type="warning" @click="handleDel(scope.$index, scope.row)"
+              :disabled="queryParams.status !== '0'">
+              删除
+            </el-button>
+          </div>
+          <div v-else>
+            <el-button type="primary" @click="handleRating(scope.row)">
+              评分
+            </el-button>
+          </div>
+
+
         </template>
       </el-table-column>
+
+
     </el-table>
     <el-pagination layout="prev, pager, next" :total="state.data.total" :page-size="queryParams.pageSize"
       @change="onPageChange" />
@@ -75,6 +88,18 @@
         </div>
       </template>
     </el-dialog>
+    <el-dialog v-model="dialogVisible2" width="500" @close="clearData2">
+      <el-rate v-model="ratingValue" />
+      <template #footer>
+
+        <div class="dialog-footer">
+          <el-button @click="dialogVisible2 = false">取消</el-button>
+          <el-button type="primary" @click="saveRating">
+            确定
+          </el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -90,7 +115,7 @@ const queryParams = reactive({
   pageSize: 10,
   status: '1'
 })
-
+const ratingValue = ref(0)
 let statusOptions = []
 if (getUser().role == '0') {
   statusOptions = [{ value: '0', label: '待审核' }, { value: '1', label: '已审核' }, { value: '2', label: '已拒绝' }]
@@ -100,8 +125,8 @@ if (getUser().role == '0') {
 
 const state = reactive({
   data: {},
-  cuisinesList: []
-
+  cuisinesList: [],
+  rowId: '',
 })
 const handleInput = (value) => {
   console.log('输入的值:', value);
@@ -127,9 +152,14 @@ const clearData = () => {
   mode = '0'
 }
 
-const handleStatus=(row,status)=>{
-  row.status=status
-  axios.put('recipes',row).then(res=>{
+const clearData2 = () => {
+  ratingValue.value = 0
+  state.rowId = ''
+}
+
+const handleStatus = (row, status) => {
+  row.status = status
+  axios.put('recipes', row).then(res => {
     ElMessage.success('更新成功')
     getRecipesList()
   })
@@ -211,6 +241,20 @@ const handleDel = (index, row) => {
     getRecipesList()
   })
 }
+
+const dialogVisible2 = ref(false)
+const handleRating = (row) => {
+  dialogVisible2.value = true
+  state.rowId = row.id
+}
+
+const saveRating = () => {
+  axios.post('rating', { foodId: state.rowId, username: getUser().username, rating: ratingValue.value }).then(res => {
+    ElMessage.success('评分成功')
+    dialogVisible2.value = false
+  })
+}
+
 const statusFormatter = (row, col, value) => {
 
   if (value == '0') {

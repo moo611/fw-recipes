@@ -4,29 +4,31 @@
       <h1>食谱推荐系统</h1>
     </div>
     <div>
-      <img src="../assets/logo.png"/>
+      <img src="../assets/logo.png" />
     </div>
-    <el-form class="form" :model="form" label-width="auto" style="width: 600px">
-      <el-form-item label="用户名">
-        <el-input v-model="form.username" />
-      </el-form-item>
-      <el-form-item label="昵称">
-        <el-input v-model="form.nickname" />
-      </el-form-item>
-      <el-form-item label="密码">
-        <el-input v-model="form.password" type="password"/>
-      </el-form-item>
-      <el-form-item label="角色">
-        <el-select v-model="form.role" placeholder="请选择">
-          <el-option v-for="item in roleOptions" :key="item.value" :label="item.label" :value="item.value" />
-        </el-select>
-      </el-form-item>
-     
-     
-    </el-form>
-    <div>
-      <el-button @click="signup" class="button">注册</el-button>
-    </div>
+    <el-card class="form">
+      <el-form style="width: 100%; height: 100%;" :model="form" label-width="auto">
+        <el-form-item label="用户名">
+          <el-input v-model="form.username" />
+        </el-form-item>
+        <el-form-item label="昵称">
+          <el-input v-model="form.nickname" />
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input v-model="form.password" type="password" />
+        </el-form-item>
+        <el-form-item label="角色">
+          <el-select v-model="form.role" placeholder="请选择">
+            <el-option v-for="item in roleOptions" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div style="width: 100%; display: flex; align-items: center;justify-content: center;">
+        <el-button type="primary" @click="signup" class="button">注册</el-button>
+      </div>
+
+    </el-card>
+
 
   </div>
 </template>
@@ -42,7 +44,7 @@ const form = reactive({
   password: "",
   nickname: "",
   role: '0',
-  
+
 
 });
 
@@ -97,6 +99,7 @@ function validateString(str) {
 }
 
 .form {
+  width: 400px;
   margin: 40px auto;
 }
 </style>
