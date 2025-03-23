@@ -73,9 +73,10 @@ const getInfo = () => {
       menus.push({ label: '菜谱管理', value: '/dashboard/recipes' })
       menus.push({ label: '用户管理', value: '/dashboard/user' })
     } else {
-
+      menus.push({ label: '首页', value: '/dashboard/home' })
       menus.push({ label: '菜谱分享', value: '/dashboard/recipes' })
       menus.push({label: '菜谱推荐', value: '/dashboard/recommend'})
+      menus.push({label: '设置', value: '/dashboard/setting'})
     }
     menuList.value = menus
 

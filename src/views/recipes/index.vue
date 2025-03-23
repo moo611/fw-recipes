@@ -18,6 +18,7 @@
       </el-table-column>
       <el-table-column prop="name" label="菜名" />
       <el-table-column prop="cuisineName" label="菜系名" />
+      <el-table-column prop="price" label="价格" />
       <el-table-column prop="status" label="状态" :formatter="statusFormatter" />
       <el-table-column prop="createTime" label="创建时间" />
 
@@ -59,6 +60,9 @@
         </el-form-item>
         <el-form-item label="描述">
           <el-input v-model="form.description" />
+        </el-form-item>
+        <el-form-item label="价格">
+          <el-input v-model="form.price" type="number"/>
         </el-form-item>
         <el-form-item label="菜系">
           <el-select v-model="form.cuisineId" placeholder="请选择">

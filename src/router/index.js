@@ -5,10 +5,12 @@ import SignUp from "../views/SignUp.vue";
 import DashBoard from "../views/DashBoard.vue";
 import User from "../views/user/index.vue";
 import Recipes from "../views/recipes/index.vue";
-import Detail from "../views/recipes/detail.vue";
+import Detail from "../views/home/detail.vue";
 import Cuisines from '../views/cuisines/index.vue';
 import { getToken } from "../utils/auth"; // 访问缓存的用户名
 import Recommend from '../views/recommend/index.vue'
+import Home from '../views/home/index.vue'
+import Setting from '../views/setting/index.vue'
 const routes = [
   {
     path: "/login",
@@ -27,6 +29,12 @@ const routes = [
     component: DashBoard,
     meta: { requiresAuth: true },
     children: [
+      {
+        path: "home",
+        name: "Home",
+        component: Home,
+        meta: { requiresAuth: true },
+      },
       {
         path: "recipes",
         name: "Recipes",
@@ -50,6 +58,12 @@ const routes = [
         path: "recommend",
         name: "Recommend",
         component: Recommend,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "setting",
+        name: "Setting",
+        component: Setting,
         meta: { requiresAuth: true },
       },
     ],
