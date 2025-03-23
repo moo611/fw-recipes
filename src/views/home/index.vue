@@ -7,7 +7,12 @@
     </div>
     <div class="bottom">
         <div v-for="item, index in state.data.list" :key="index" class="card" @click="handleDetail(item)">
-          <img :src="item.imageUrl" style="width: 100%; aspect-ratio: 1/1 ;" />
+          <div><img :src="item.imageUrl" style="width: 100%; aspect-ratio: 1/1 ;" /></div>
+          <div style="display: flex;">
+            <span>{{item.name}}</span>
+            <span style="flex: 1;"></span>
+            <span style="color: red; margin-right: 20px;">{{item.price}}￥</span>
+          </div>
         </div>
         <el-pagination class="page" layout="prev, pager, next" :total="state.data.total" :page-size="queryParams.pageSize"
           @change="onPageChange" />
