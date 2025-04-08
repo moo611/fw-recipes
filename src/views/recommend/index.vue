@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="header">
-      
+      <el-select style="width: 200px;" v-model="queryParams.cuisineId" placeholder="请选择" @change="getRecipesList">
+        <el-option v-for="item in state.cuisines" :key="item.value" :label="item.label" :value="item.value" />
+      </el-select>
     </div>
     <el-table class="my-table" :data="state.data">
       <!-- 图片列 -->
@@ -12,9 +14,9 @@
         </template>
       </el-table-column>
       <el-table-column prop="name" label="菜名" />
-      <el-table-column prop="cuisineName" label="菜系名" />
-      <el-table-column prop="status" label="状态" :formatter="statusFormatter" />
-      <el-table-column prop="createTime" label="创建时间" />
+      <!-- <el-table-column prop="cuisineName" label="菜系名" /> -->
+      <!-- <el-table-column prop="status" label="状态" :formatter="statusFormatter" />
+      <el-table-column prop="createTime" label="创建时间" /> -->
 
 
     </el-table>
@@ -34,26 +36,27 @@ let mode = '0'
 const queryParams = reactive({
   pageNum: 1,
   pageSize: 10,
-  status: '1'
+  status: '1',
+  topk:3,
+  cuisineId: null
 })
 
 
 const state = reactive({
   data: [],
- 
+  cuisines: []
 })
 
-const form = reactive({
-  name: '',
-  description: '',
-  imageUrl: '',
-  id: '',
-  cuisineId: ''
-})
+
 
 const getRecipesList = () => {
 
-  axios.get('recipes/recommend', { params: queryParams }).then(res => {
+  let params = { ...queryParams }
+  if (queryParams.cuisineId == 'all') {
+    params.cuisineId = null
+  }
+
+  axios.get('recipes/recommend2', { params: params }).then(res => {
 
     state.data = res
 
@@ -64,36 +67,28 @@ const getRecipesList = () => {
 }
 
 
-const copyValue = (src, target) => {
-  // 遍历 target 中的 key，并将 src 对应属性赋值给 target
-  Object.keys(target).forEach((key) => {
-    if (src[key] !== undefined) {
-      target[key] = src[key] // 仅赋值存在于 src 中的属性
-    }
-  })
-}
-
-
-const statusFormatter = (row, col, value) => {
-
-  if (value == '0') {
-    return '待审核'
-  }
-  if (value == '1') {
-    return '已审核'
-  }
-
-  return '已拒绝'
-}
-
 const onPageChange = (page, size) => {
   queryParams.pageNum = page
   getRecipesList()
 }
 
+const getCuisinesList = () => {
+
+  axios.get('cuisines/list', { params: { pageNum: 1, pageSize: 10000 } }).then(res => {
+
+    state.cuisines = res.list.map(item => ({ label: item.name, value: item.id }))
+    if (state.cuisines.length > 0) {
+      queryParams.cuisineId = state.cuisines[0].value
+      getRecipesList()
+    }
+    console.log(state.data)
+
+  })
+
+}
+getCuisinesList()
 
 
-getRecipesList()
 
 </script>
 
