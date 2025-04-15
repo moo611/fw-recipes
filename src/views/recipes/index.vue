@@ -6,11 +6,11 @@
         <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
 
-      <el-button @click="handleAdd" type="primary" class="btn-add">分享</el-button>
+      <el-button @click="handleAdd" type="primary" class="btn-add">{{ getName()}}</el-button>
     </div>
     <el-table class="my-table" :data="state.data.list">
       <!-- 图片列 -->
-      <el-table-column label="图片" width="120">
+      <el-table-column label="图片">
         <template v-slot="scope">
           <!-- 使用 img 标签来展示图片 -->
           <img :src="scope.row.imageUrl" alt="图片" style="width: 100px; height: 80px;" />
@@ -126,7 +126,12 @@ if (getUser().role == '0') {
 } else {
   statusOptions = [{ value: '1', label: '已审核' }]
 }
-
+const getName=()=>{
+  if(getUser().role == '0'){
+    return '上传'
+  }
+  return '分享'
+}
 const state = reactive({
   data: {},
   cuisinesList: [],

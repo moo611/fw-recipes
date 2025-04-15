@@ -13,7 +13,7 @@
         <el-input v-model="form.nickname" />
       </el-form-item>
       <el-form-item label="角色">
-        <el-select v-model="form.role" placeholder="请选择">
+        <el-select v-model="form.role" placeholder="请选择" :disabled="true">
           <el-option v-for="item in roleOptions" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </el-form-item>

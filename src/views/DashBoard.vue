@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="header">
-      <h3 style="margin-left: 30px;">食谱推荐系统</h3>
+      <h2 style="margin-left: 30px; color: white;">食谱推荐系统</h2>
       <div class="btn-logout">
         <el-popover v-model:visible="popoverVisible" placement="bottom" width="200">
           <el-button type="text" @click="logout">退出登录</el-button>
@@ -9,7 +9,7 @@
             <div @click="popoverVisible = !popoverVisible" style="display: flex; align-items: center; cursor: pointer;">
 
               <img style="width: 40px; height: 40px;" src="../assets/avt_default.png" />
-              <span style="margin-left: 8px;">{{ curName }}</span>
+              <span style="margin-left: 8px; color: white;">{{ curName }}</span>
             </div>
           </template>
         </el-popover>
@@ -51,7 +51,7 @@ const curName = ref('')
 watch(route, (newRoute) => {
   activeMenu.value = newRoute.path;
 });
-function logout() {
+const logout=()=>{
   clear(); // 清除缓存的用户名
   router.push('/login'); // 重定向到登录页
 }
@@ -87,19 +87,12 @@ getInfo()
 
 </script>
 <style lang="css" scoped>
-/* 使用 ::v-deep 来覆盖 el-menu 的样式 */
-::v-deep .custom-menu {
-  font-size: 16px;
-  /* 设置菜单的字体大小 */
-  font-weight: 600;
-  background-color: transparent;
+.custom-menu{
+  height: 100%;
 }
-
-::v-deep .custom-menu .el-menu-item {
+::v-deep .custom-menu .el-menu-item{
   font-size: 16px;
-  /* 覆盖子元素 el-menu-item 的字体大小 */
   font-weight: 600;
-  background-color: transparent;
 }
 
 .main {
@@ -112,9 +105,9 @@ getInfo()
 
 .header {
   height: 80px;
-  /* background-color: #409eff; */
+  background-color:#1f8a70;
   position: relative;
-  background-color: transparent;
+  /* background-color: transparent; */
   display: flex;
   align-items: center;
 }

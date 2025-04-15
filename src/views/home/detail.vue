@@ -1,5 +1,8 @@
 <template>
-  <h2 style="margin: 30px;">美食资讯</h2>
+  <div style="display: flex;align-items: center;justify-content: center;">
+    <h2 style="margin: 20px;">美食资讯</h2>
+  </div>
+  
   <el-card style="width: 1000px; height: 400px; margin: 20px auto;">
     <div class="main">
       <img :src="state.data.imageUrl" class="img" />
@@ -14,7 +17,7 @@
           <span style="font-size: 16px;">介绍：{{ state.data.description }}</span>
         </div>
 
-        <el-button style="position: absolute;bottom: 0; width: 60%; height: 50px; margin: 20px auto;" type="primary" @click="handleBuy">购买</el-button>
+        <el-button style="position: absolute;bottom: 0; width: 60%; height: 50px; margin: 20px auto;" type="primary" @click="handleBuy">返回</el-button>
       
       </div>
     </div>
@@ -46,7 +49,8 @@ const getRecipesDetails = (id) => {
 
 }
 const handleBuy = ()=>{
-  ElMessage.success('购买成功')
+  //ElMessage.success('购买成功')
+  router.go(-1)
 }
 
 onMounted(() => {

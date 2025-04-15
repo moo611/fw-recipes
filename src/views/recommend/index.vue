@@ -7,13 +7,14 @@
     </div>
     <el-table class="my-table" :data="state.data">
       <!-- 图片列 -->
-      <el-table-column label="图片" width="120">
+      <el-table-column label="图片">
         <template v-slot="scope">
           <!-- 使用 img 标签来展示图片 -->
           <img :src="scope.row.imageUrl" alt="图片" style="width: 100px; height: 80px;" />
         </template>
       </el-table-column>
       <el-table-column prop="name" label="菜名" />
+      <el-table-column prop="rating" label="评分" :formatter="ratingFormatter"/>
       <!-- <el-table-column prop="cuisineName" label="菜系名" /> -->
       <!-- <el-table-column prop="status" label="状态" :formatter="statusFormatter" />
       <el-table-column prop="createTime" label="创建时间" /> -->
@@ -40,7 +41,9 @@ const queryParams = reactive({
   topk:3,
   cuisineId: null
 })
-
+const ratingFormatter=(row,col,v)=>{
+  return v.toFixed(2)
+}
 
 const state = reactive({
   data: [],
